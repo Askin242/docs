@@ -10,43 +10,54 @@
   },
   "servers": [
     {
-      "url": "https://funcaptcha.leakmynudes.help"
+      "url": "https://funcaptcha.leakmynudes.help/api"
     }
   ],
   "security": [],
   "paths": {
-    "/plants": {
-      "post": {
+    "/get_balance": {
+      "get": {
         "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "description": "Your api key",
+            "schema": {
+              "type": "string"
             }
-          },
-          "required": true
-        },
+          }
+        ],,
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Success",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
+                  "credits": 6.9
               }
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Missing API Key",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                "error": "Missing API key"
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API Key",
+            "content": {
+              "application/json": {
+                "error": "Invalid API key"
+              }
+            }
+          },
+          "500": {
+            "description": "Unkown error",
+            "content": {
+              "application/json": {
+                "error": "An error occurred: ..."
               }
             }
           }
@@ -56,42 +67,6 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
       "Error": {
         "required": [
           "error",
