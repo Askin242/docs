@@ -16,54 +16,68 @@
   "security": [],
   "paths": {
     "/get_balance": {
-      "get": {
-        "description": "Creates a new plant in the store",
-        "parameters": [
-          {
-            "name": "api_key",
-            "in": "query",
-            "description": "Your api key",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                  "credits": 6.9
+        "get": {
+          "description": "Fetches the balance of the user based on the API key",
+          "parameters": [
+            {
+              "name": "api_key",
+              "in": "query",
+              "description": "Your API key",
+              "schema": {
+                "type": "string",
+                "example": "12345-abcde"
               }
             }
-          },
-          "400": {
-            "description": "Missing API Key",
-            "content": {
-              "application/json": {
-                "error": "Missing API key"
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "credits": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
               }
-            }
-          },
-          "403": {
-            "description": "Invalid API Key",
-            "content": {
-              "application/json": {
-                "error": "Invalid API key"
+            },
+            "400": {
+              "description": "Missing API Key",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
               }
-            }
-          },
-          "500": {
-            "description": "Unkown error",
-            "content": {
-              "application/json": {
-                "error": "An error occurred: ..."
+            },
+            "403": {
+              "description": "Invalid API Key",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unknown error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
               }
             }
           }
         }
       }
-    }
   },
   "components": {
     "schemas": {
